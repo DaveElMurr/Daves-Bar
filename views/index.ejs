@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dave's Bar</title>
+    <style>
+        body{
+            background-color:#36454F;
+            color: gainsboro;
+            /* height: 100vh; */
+        }
+        .text-container{
+            display:flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin-top: 5%;
+           
+        }
+        .text-container button{
+            padding: 10px;
+            border-radius: 2rem;
+            border-color: aqua;
+            background-color: aqua;
+            color: #36454F;
+            font-size: 2rem;
+            padding: 1%;
+            
+        }
+        .form-container button{
+           font-size: 1rem;
+
+        }
+        .form-container input{
+            border-radius: 2rem;
+        }
+        .form-container form{
+            display: flex;
+
+        }
+        .drink-container{
+            /* height: 40%;*/
+            /* width: auto; 
+            background-color: black; */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin-top: 5%;
+            margin-bottom: 10rem;
+
+            width: auto;
+        }
+        .drink-container img{
+            width: 50%;
+        }
+        .drink-item{
+            background-color: #899499;
+            color: #36454F;
+            font-size: 1.2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .ingredient-container{
+            width: 100%;
+        }
+        .ingredient{
+            display: flex;
+            /* flex-direction: column; */
+            width: 100%;
+            padding: 0 7rem;
+        }
+        .ingredient span{
+            width: 50%;
+
+            
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="text-container">
+
+        <h1 class="text">Welcome to dave's Bar</h1>
+        <h2 class="text">Here you can find a large list of drinks to fill your thirst!</h2>
+        <div class="form-container">
+
+            <form action="/search-drink" method="post" name="search">
+                <input  type="text" name="search" placeholder="Search for a drink">
+                <button   type="submit">Search</button>
+               </form>
+
+            </div>
+        <h2 class="text">If your not sure of what to drink and are feeling adventourous  try our random drink selector!</h2>
+        <form action="/random-drink" method="post">
+        <button class="text" >Random Drink! 🍻</button>
+    </form>
+    </div>
+    <% if (locals.image && locals.drinkName && locals.ingredients_measurments ) { %>
+    <div class="drink-container">
+        
+         
+            <div class="drink-item">
+                
+                <h1> <%=drinkName  %></h1>
+                <img src=<%= image %> alt="">
+                
+                <h3><%= alcaholicType %></h3>
+                
+                <% ingredients_measurments.forEach(element => { %>
+                 
+               
+               
+
+                 <div class="ingredient-container">
+
+                     <p class="ingredient"> <span>Ingredient: <%= element.ingredient %></span>  <span> Mearsure: <%= element.measurment %></span></p>
+                    </div>  
+                
+              
+                <% }) %>
+                
+            </div> 
+        </div>
+      
+            
+            
+          <% } else if (locals.drinksList) { %>
+           <% drinksList.forEach(element => { %>
+            
+            <div class="drink-container">
+                
+                
+                <div class="drink-item">
+                    
+                    <h1> <%=element.strDrink %></h1>
+                    <img src=<%= element.strDrinkThumb %> alt="">
+                    
+                    <h3><%= element.strAlcoholic %></h3>
+                    <% element.ingredients.forEach(drinkelement => { %>
+                 
+               
+                       
+                        <div class="ingredient-container">
+                        <p class="ingredient"> <span>Ingredient: <%= drinkelement.ingredient %></span>  <span>Mearsure: <%= drinkelement.measurment %></span></p>
+               
+                    </div>  
+                       
+
+                        <% }) %>
+                </div> 
+            </div>
+            
+            <% }) %>
+
+
+             <% } else { %>
+              
+            
+            <% } %>
+
+</body>
+</html>
